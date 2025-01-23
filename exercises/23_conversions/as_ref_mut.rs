@@ -5,20 +5,29 @@
 // Obtain the number of bytes (not characters) in the given argument
 // (`.len()` returns the number of bytes in a string).
 // TODO: Add the `AsRef` trait appropriately as a trait bound.
-fn byte_counter<T>(arg: T) -> usize {
+
+// AsRef和AsMut允许廉价的引用到引用转换。阅读更多
+// 关于他们在https:// doc.rust-lang.org/std/convert/trait.AsRef.html和
+// https:// doc.rust-lang.org/std/convert/trait.AsMut.html。
+
+// 获取给定参数中的字节 (非字符) 数
+// ('.len()' 返回字符串中的字节数)。
+// TODO: 适当地添加 'AsRef' 特征作为特征绑定。
+fn byte_counter<T: AsRef<str>>(arg: T) -> usize {
     arg.as_ref().len()
 }
 
 // Obtain the number of characters (not bytes) in the given argument.
 // TODO: Add the `AsRef` trait appropriately as a trait bound.
-fn char_counter<T>(arg: T) -> usize {
+fn char_counter<T: AsRef<str>>(arg: T) -> usize {
     arg.as_ref().chars().count()
 }
 
 // Squares a number using `as_mut()`.
 // TODO: Add the appropriate trait bound.
-fn num_sq<T>(arg: &mut T) {
+fn num_sq<T: AsMut<u32>>(arg: &mut T) {
     // TODO: Implement the function body.
+    *arg.as_mut() = (*arg.as_mut()) * (*arg.as_mut());
 }
 
 fn main() {

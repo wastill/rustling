@@ -4,6 +4,12 @@
 // method on strings to generate an object of the implementor type. You can read
 // more about it in the documentation:
 // https://doc.rust-lang.org/std/str/trait.FromStr.html
+// 这与之前的 “from_in0” 练习类似。但这次我们
+// 实现 'FromStr' 并返回错误，而不是回退到默认值
+// 值。此外，在实现 'FromStr' 时，您可以使用 'parse'
+// 方法以生成实现者类型的对象。你可以阅读
+// 更多关于它的文档:
+// https:// doc.rust-lang.org/std/str/trait.FromStr.html
 
 use std::num::ParseIntError;
 use std::str::FromStr;
@@ -38,10 +44,33 @@ enum ParsePersonError {
 // 4. If the name is empty, return the error `ParsePersonError::NoName`.
 // 5. Parse the second element from the split operation into a `u8` as the age.
 // 6. If parsing the age fails, return the error `ParsePersonError::ParseInt`.
+// TODO: 完成这个 'FromStr' 实现，以便能够解析一个 'Person'
+// 以 “Mark，20” 的形式输出一个字符串。
+// 请注意，您需要将age组件解析为带有某些内容的 'u8'
+// like '“4”.parse ::< u8>()'。
+//
+// 步骤:
+// 1.在其中存在的逗号上拆分给定的字符串
+// 2.如果拆分操作返回少于或多于2个元素，则返回
+//    错误 “parsepersorerror:: badlen”。
+// 3.使用拆分操作中的第一个元素作为名称
+// 4.如果名称为空，则返回错误 'ParsePersonError::NoName'。
+// 5.将拆分操作中的第二个元素解析为 'u8' 作为年龄。
 impl FromStr for Person {
     type Err = ParsePersonError;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {}
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let parts: Vec<&str> = s.split(',').collect();
+        if parts.len() != 2 {
+            return Err(ParsePersonError::BadLen);
+        }
+        let name = parts[0].to_string();
+        if name.is_empty() {
+            return Err(ParsePersonError::NoName);
+        }
+        let age = parts[1].parse::<u8>().map_err(ParsePersonError::ParseInt)?;
+        Ok(Person { name, age })
+    }
 }
 
 fn main() {

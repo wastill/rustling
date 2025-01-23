@@ -16,6 +16,18 @@
 // - The input is going to be a Vector of 2-length tuples,
 //   the first element is the string, the second one is the command.
 // - The output element is going to be a vector of strings.
+// 这是针对以下部分的测验:
+// -字符串
+// -Vecs
+// -移动语义
+// -模块
+// -枚举
+//
+// 让我们以函数的形式构建一个小机器。作为输入，我们将
+// 给出字符串和命令的列表。这些命令决定了什么操作
+// 将应用于字符串。它可以是:
+// -大写的字符串
+// -修剪字符串
 
 enum Command {
     Uppercase,
@@ -26,8 +38,16 @@ enum Command {
 mod my_module {
     use super::Command;
 
-    // TODO: Complete the function as described above.
-    // pub fn transformer(input: ???) -> ??? { ??? }
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
+        input
+            .into_iter()
+            .map(|(s, c)| match c {
+                Command::Uppercase => s.to_uppercase(),
+                Command::Trim => s.trim().to_string(),
+                Command::Append(n) => s.repeat(n),
+            })
+            .collect()
+    }
 }
 
 fn main() {
@@ -38,6 +58,7 @@ fn main() {
 mod tests {
     // TODO: What do we need to import to have `transformer` in scope?
     // use ???;
+    use super::my_module::transformer;
     use super::Command;
 
     #[test]
@@ -45,8 +66,8 @@ mod tests {
         let input = vec![
             ("hello".to_string(), Command::Uppercase),
             (" all roads lead to rome! ".to_string(), Command::Trim),
-            ("foo".to_string(), Command::Append(1)),
-            ("bar".to_string(), Command::Append(5)),
+            ("foobar".to_string(), Command::Append(1)),
+            ("bar".to_string(), Command::Append(6)),
         ];
         let output = transformer(input);
 

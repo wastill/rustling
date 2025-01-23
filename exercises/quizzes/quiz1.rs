@@ -12,10 +12,30 @@
 // the quantity bought.
 // fn calculate_price_of_apples(???) -> ??? { ??? }
 
+// 这是对以下部分的测验:
+//-变量
+//-函数
+//-如果
+//
+// 玛丽正在买苹果。苹果的价格计算如下:
+//-一个苹果要花2美元。
+//-然而，如果玛丽买了40多个苹果，每个苹果的价格在
+// 整个订单减少到只有1 rustbuck!
+
+// TODO: 编写一个计算给定苹果订单价格的函数
+// 购买的数量。
+
 fn main() {
     // You can optionally experiment here.
 }
 
+fn calculate_price_of_apples(quantity: u32) -> u32 {
+    if quantity > 40 {
+        quantity
+    } else {
+        quantity * 2
+    }
+}
 // Don't change the tests!
 #[cfg(test)]
 mod tests {

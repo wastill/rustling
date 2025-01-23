@@ -39,7 +39,7 @@ mod tests {
         let mut input = Cow::from(&vec);
         abs_all(&mut input);
         // TODO: Replace `todo!()` with `Cow::Owned(_)` or `Cow::Borrowed(_)`.
-        assert!(matches!(input, todo!()));
+        assert!(matches!(input, Cow::Borrowed(_)));
     }
 
     #[test]
@@ -48,11 +48,15 @@ mod tests {
         // case, no mutation occurs (all numbers are already absolute) and thus
         // also no clone. But the result is still owned because it was never
         // borrowed or mutated.
+        // 我们也可以通过 'vec' 没有 '&' 所以 'Cow' 直接拥有它。在这个
+        // 情况下，不会发生突变 (所有数字已经是绝对的)，因此
+        // 也没有克隆。但结果仍然是拥有的，因为它从来没有
+        // 借来的或变异的。
         let vec = vec![0, 1, 2];
         let mut input = Cow::from(vec);
         abs_all(&mut input);
         // TODO: Replace `todo!()` with `Cow::Owned(_)` or `Cow::Borrowed(_)`.
-        assert!(matches!(input, todo!()));
+        assert!(matches!(input, Cow::Owned(_)));
     }
 
     #[test]
@@ -64,6 +68,6 @@ mod tests {
         let mut input = Cow::from(vec);
         abs_all(&mut input);
         // TODO: Replace `todo!()` with `Cow::Owned(_)` or `Cow::Borrowed(_)`.
-        assert!(matches!(input, todo!()));
+        assert!(matches!(input, Cow::Owned(_)));
     }
 }

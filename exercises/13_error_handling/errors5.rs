@@ -10,6 +10,18 @@
 // `Trait` is the trait the compiler looks for on any value used in that
 // context. For this exercise, that context is the potential errors which
 // can be returned in a `Result`.
+// 此练习是 “errors4” 练习的修改版本。它使用一些
+// 我们在课程后期才会用到的概念，比如 “盒子” 和
+// “来自” 特质。现在详细了解它们并不重要，但是
+// 如果你喜欢，你可以提前阅读。现在，将 “box <dyn ？？？>” 类型视为
+// “我想要任何能做到的东西 ？？？” 类型。
+//
+// 简而言之，盒子的这个特殊用例是当你想拥有一个
+// 值，你只关心它是一个实现特定的类型
+// 特质。为此，将 “box” 声明为 “box <dyn Trait>” 类型，其中
+// 'Trait' 是编译器在其中使用的任何值上查找的特征
+// 上下文。对于此练习，该上下文是潜在的错误
+// 可以在 “结果” 中返回。
 
 use std::error::Error;
 use std::fmt;
@@ -48,7 +60,7 @@ impl PositiveNonzeroInteger {
 
 // TODO: Add the correct return type `Result<(), Box<dyn ???>>`. What can we
 // use to describe both errors? Is there a trait which both errors implement?
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let pretend_user_input = "42";
     let x: i64 = pretend_user_input.parse()?;
     println!("output={:?}", PositiveNonzeroInteger::new(x)?);
